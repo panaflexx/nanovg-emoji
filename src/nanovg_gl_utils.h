@@ -18,6 +18,29 @@
 #ifndef NANOVG_GL_UTILS_H
 #define NANOVG_GL_UTILS_H
 
+#if defined(NANOVG_GL3) || defined(NANOVG_GLES2) || defined(NANOVG_GLES3)
+// FBO is core in OpenGL 3>.
+#	define NANOVG_FBO_VALID 1
+#	ifdef __APPLE__
+#		include <OpenGL/gl3.h>
+#		include <OpenGL/glext.h>
+#		define NANOVG_FBO_VALID 1
+#   else
+#		include <GL/gl.h>
+#		include <GL/glext.h>
+#		define NANOVG_FBO_VALID 1
+#	endif
+#elif defined(NANOVG_GL2)
+// On OS X including glext defines FBO on GL2 too.
+#	ifdef __APPLE__
+#		include <OpenGL/glext.h>
+#		define NANOVG_FBO_VALID 1
+#   else
+#		include <GL/glext.h>
+#		define NANOVG_FBO_VALID 1
+#	endif
+#endif
+
 struct NVGLUframebuffer {
 	NVGcontext* ctx;
 	GLuint fbo;
@@ -36,16 +59,6 @@ void nvgluDeleteFramebuffer(NVGLUframebuffer* fb);
 
 #ifdef NANOVG_GL_IMPLEMENTATION
 
-#if defined(NANOVG_GL3) || defined(NANOVG_GLES2) || defined(NANOVG_GLES3)
-// FBO is core in OpenGL 3>.
-#	define NANOVG_FBO_VALID 1
-#elif defined(NANOVG_GL2)
-// On OS X including glext defines FBO on GL2 too.
-#	ifdef __APPLE__
-#		include <OpenGL/glext.h>
-#		define NANOVG_FBO_VALID 1
-#	endif
-#endif
 
 static GLint defaultFBO = -1;
 
