@@ -5,6 +5,8 @@ This is my customized version of NanoVG (for use with NanoGUI) which supports co
 
 Normal fallback works for intermixing text + emoji.
 
+I've only tested with NotoColorEmoji.ttf
+
 ## Screenshot
 
 ![screenshot of some emoji text rendered](/example/screenshot-03.png?raw=true)
